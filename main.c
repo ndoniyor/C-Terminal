@@ -6,9 +6,9 @@
 #define TRUE 1
 
 int main(){
-    //while(TRUE){
-        char* command;
-        getline(stdin, command);
-        fork_process(command);
-    //}
+    while(TRUE){
+        char buf[4096];
+        fgets(buf, sizeof(buf), stdin);
+        fork_process(buf);
+    }
 }

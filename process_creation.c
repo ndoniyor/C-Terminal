@@ -1,13 +1,18 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <fcntl.h>
 #include "string_manip.h"
 #include "process_creation.h"
 
+#define TRUE 1
+
 void fork_process(char* command){
     pid_t fpid; 
-    char** split_string = split(command);
-    int count = 0;
+    int arg_count=1;
+    char** args = split(&arg_count,command);
+    int count = 0,fd;
     char* status;
+    const char* filepath;
     fpid = fork();
     
     if(fpid<0){
@@ -15,12 +20,22 @@ void fork_process(char* command){
     }
     else if(fpid==0){
         printf("Child process | ID: %d\n", getpid());
-        execvp(split_string[0],split_string);
+        if(check_for_redirect(arg_count, args)==TRUE){
+            filepath = append_working_directory(args[arg_count-1]);
+            printf("%s\n", filepath);
+            fd = open(filepath, O_RDWR | O_CREAT);
+        }
+        dup2(1, fd);
+        execvp(args[0],args);
     }
     else{
-        printf("Parent process | ID: %d",getpid());
+        printf("Parent process | ID: %d\n",getpid());
         waitpid(-1, &status, 0);
     }
-    printf("Count: %d",count);
+    printf("Count: %d\n",count);
     return;
 }
+
+//int main(){
+  //  fork_process("echo hello > test.txt");
+//}

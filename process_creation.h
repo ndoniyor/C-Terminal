@@ -1,1 +1,1 @@
-void fork_process(char* const command);
+void fork_process(char* command);
