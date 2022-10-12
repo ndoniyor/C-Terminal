@@ -1,7 +1,5 @@
 # C-Terminal
-Custom-made C terminal simulator
-
-Run make
+Custom-made shell simulator written in C.
 
 ## To-do:
 ### Functions:
@@ -11,8 +9,8 @@ Run make
 * [ ] man
 * [ ] cd
 ### Function operators:
-* [ ] input redirection (<) *(in progress)*
-* [ ] output redirection (>)
+* [ ] input redirection (<) 
+* [ ] output redirection (>) *(in progress)*
 * [ ] pipe (|)
 * [ ] background exececution (&)
 
