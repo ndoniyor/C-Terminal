@@ -3,13 +3,13 @@ Custom-made C terminal simulator
 
 Run make
 
-To-do:
+To-do: \
 🕐 echo
 * [ ] cat
 * [ ] grep
 * [ ] man
 * [ ] cd
-* [ ] input redirection (<)
+* [ ] input redirection (<) \
 🕐 output redirection (>)
 * [ ] pipe (|)
 * [ ] background exececution (&)
