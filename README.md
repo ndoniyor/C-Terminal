@@ -3,14 +3,18 @@ Custom-made C terminal simulator
 
 Run make
 
-To-do: \
-🕐 echo
+## To-do:
+### Functions:
+* [ ] echo *(in progress)*
 * [ ] cat
 * [ ] grep
 * [ ] man
 * [ ] cd
-* [ ] input redirection (<) \
-🕐 output redirection (>)
+### Function operators:
+* [ ] input redirection (<) *(in progress)*
+* [ ] output redirection (>)
 * [ ] pipe (|)
 * [ ] background exececution (&)
-* [ ] 
+
+## Running:
+Run make
