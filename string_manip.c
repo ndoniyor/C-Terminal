@@ -14,7 +14,7 @@ char** split(int* number_of_elements, char* string){                            
     }
     strcpy(pre_split, string);                                          //convert char* to string literal for strtok
 
-    char** post_split = malloc(*number_of_elements * sizeof(char *));    //allocate memory for post_split array of strings so it can be returned
+    char** post_split = malloc(*number_of_elements * sizeof(char *)+1);    //allocate memory for post_split array of strings so it can be returned
     
     char* token = strtok(pre_split, " ");                               //define first token
     i=0;
@@ -24,6 +24,7 @@ char** split(int* number_of_elements, char* string){                            
         strcpy(post_split[i++],token);                                  //copy token to post_split
         token = strtok(NULL," ");                                       //get next token
     }
+    post_split[i] = NULL;
     return post_split;
 }
 

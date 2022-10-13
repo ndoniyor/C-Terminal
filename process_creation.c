@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <errno.h>
 #include "string_manip.h"
 #include "process_creation.h"
 
@@ -26,15 +27,14 @@ void fork_process(char* command){
             printf("Redirection found, appending working directory...\n");
             filepath = append_working_directory(args[arg_count-1]);
             printf("Redirect found, path: %s\n", filepath);
-            fd = open(filepath, O_WRONLY | O_CREAT);
+            fd = open(filepath, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
         }
-        else
-            printf("Redirect not found\n");
-        dup2(STDOUT_STREAM, fd);
-       // printf("hello");
+        dup2(fd, fileno(stdout));
         //if(execvp("echo","echo hello world")==-1)
         //    printf("%d",errno);
-        printf("%d\n",execvp("echo","echo hello"));
+        if(execvp(args[0],args)==-1){
+            printf("error: %d\n",errno);
+        }
     }
     else{
         printf("Parent process | ID: %d\n\n",getpid());
