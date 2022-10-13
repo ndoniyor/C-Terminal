@@ -28,10 +28,18 @@ char** split(int* number_of_elements, char* string){                            
 }
 
 char* append_working_directory(char* file){
-    char* directory = "./";
-    if(file[0]!='.')
-        strcat(directory, file);
-    printf("d:%s\n",directory);
+    char* directory = malloc(strlen(file)+2);
+    strcpy(directory, "./");
+    printf("Filename: %s, first char: %c\n",file,file[0]);
+    if(file[0]!='.'){
+        printf("Concatenating directory...\n");
+        strcat(directory,file);
+    }
+    else{
+        printf("comparison failed\n");
+    }
+    printf("dir: %s\n",directory);
+    
     return directory;
 }
 
