@@ -61,14 +61,9 @@ int check_for_redirect(int size, char** args){
     return 0;
 }
 
-char** strip_operators(int* size, char** args){
+void strip_operators(int* size, char** args){
     int i;
     *size-=2;
-    char** post_strip = malloc((*size) * sizeof(char *));
-    for(i=0;i<*size;i++){
-        post_strip[i]=args[i];
-    }
-    post_strip[i]=NULL;
-    //print_args(*size,post_strip);
-    return post_strip;
+    args = realloc(args,(*size) * sizeof(char *));
+    args[*size]=NULL;
 }

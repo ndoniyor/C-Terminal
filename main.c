@@ -7,8 +7,9 @@
 
 int main(){
  //   while(TRUE){
-        char buf[4096] = "echo hello world > test1.txt";
+        char buf[4096] = "cat test1.txt > test2.txt";
       //fgets(buf, sizeof(buf), stdin);
+        fork_process("echo hello world > test1.txt");
         fork_process(buf);
    // }
 }

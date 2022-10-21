@@ -23,19 +23,19 @@ void fork_process(char* command){
     }
     else if(fpid==0){
         printf("Child process | ID: %d\n\n", getpid());
-        printf("Checking for redirection...\n");
+
         if(check_for_redirect(arg_count, args)==TRUE){
             printf("Redirection found, appending working directory...\n");
             filepath = append_working_directory(args[arg_count-1]);
+
             printf("Redirect found, path: %s\n", filepath);
             fd = open(filepath, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+
+            printf("Removing redirection...\n");
+            strip_operators(&arg_count, args);
+            dup2(fd, STDOUT_STREAM);
         }
-        printf("Removing redirection...\n");
-        char** post_strip = strip_operators(&arg_count, args);
-        //print_args(arg_count,post_strip);
-        free(args);
-        dup2(fd, fileno(stdout));
-        if(execvp(post_strip[0],post_strip)==-1)
+        if(execvp(args[0],args)==-1)
             printf("error: %d\n",errno);
     }
     else{
@@ -44,7 +44,3 @@ void fork_process(char* command){
     }
     return;
 }
-
-//int main(){
-  //  fork_process("echo hello > test.txt");
-//}
