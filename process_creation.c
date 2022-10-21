@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdlib.h>
 #include "string_manip.h"
 #include "process_creation.h"
 
@@ -14,7 +15,7 @@ void fork_process(char* command){
     char** args = split(&arg_count,command);
     int count = 0,fd;
     char* status;
-    const char* filepath;
+    char* filepath;
     fpid = fork();
     
     if(fpid<0){
@@ -29,18 +30,18 @@ void fork_process(char* command){
             printf("Redirect found, path: %s\n", filepath);
             fd = open(filepath, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
         }
+        printf("Removing redirection...\n");
+        char** post_strip = strip_operators(&arg_count, args);
+        //print_args(arg_count,post_strip);
+        free(args);
         dup2(fd, fileno(stdout));
-        //if(execvp("echo","echo hello world")==-1)
-        //    printf("%d",errno);
-        if(execvp(args[0],args)==-1){
+        if(execvp(post_strip[0],post_strip)==-1)
             printf("error: %d\n",errno);
-        }
     }
     else{
         printf("Parent process | ID: %d\n\n",getpid());
         waitpid(-1, &status, 0);
     }
-    printf("Count: %d\n",count);
     return;
 }
 

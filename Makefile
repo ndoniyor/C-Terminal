@@ -16,4 +16,4 @@ main.o:
 	$(CC) $(CFLAGS) -c main.c
 
 clean:
-	$(RM) output *.o
+	$(RM) output *.o *.txt

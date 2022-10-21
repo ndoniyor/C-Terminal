@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "string_manip.h"
+
+void print_args(int size, char** args){
+    printf("Printing...\n");
+    int i;
+    for(i=0;i<size;i++){
+        printf("args[%d]=%s\n",i,args[i]);
+    }
+}
 /*This function needs to be modified to allow for inputs with spaces like 'echo hello world' printing 'hello world'*/
 char** split(int* number_of_elements, char* string){                                             //C function to split string by 'space' delimiter
     int size_of_token, i = 1;
@@ -51,4 +59,16 @@ int check_for_redirect(int size, char** args){
             return 1;
     }
     return 0;
+}
+
+char** strip_operators(int* size, char** args){
+    int i;
+    *size-=2;
+    char** post_strip = malloc((*size) * sizeof(char *));
+    for(i=0;i<*size;i++){
+        post_strip[i]=args[i];
+    }
+    post_strip[i]=NULL;
+    //print_args(*size,post_strip);
+    return post_strip;
 }
