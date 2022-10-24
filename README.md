@@ -1,2 +1,2 @@
 ## Running:
-<pre><code>make && ./output</pre></code>
+<pre><code>$ make && ./output</pre></code>
