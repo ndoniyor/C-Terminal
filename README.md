@@ -5,13 +5,13 @@ Custom-made shell simulator written in C.
 ### Functions:
 * [x] echo *(operational as is and with > operator, need testing with pipe once it's implemented)*
 * [x] cat *(operational as is and with > operator, need testing with pipe once it's implemented)*
-* [ ] grep
-* [ ] man
+* [x] grep
+* [x] man
 * [ ] cd
 ### Function operators:
-* [ ] input redirection (<) 
+* [x] input redirection (<) 
 * [x] output redirection (>) *operational with echo and cat, need testing with man and grep once implemented*
-* [ ] pipe (|)
+* [x] pipe (|)
 * [ ] background exececution (&)
 ### Other:
 * [x] When using output redirection truncate args string to not include operator and filename

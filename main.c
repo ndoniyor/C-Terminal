@@ -6,10 +6,14 @@
 #define TRUE 1
 
 int main(){
- //   while(TRUE){
-        char buf[4096] = "cat test1.txt > test2.txt";
-      //fgets(buf, sizeof(buf), stdin);
-        fork_process("echo hello world > test1.txt");
-        fork_process(buf);
-   // }
+char* wd[1024];                             //holds working directory
+    while(TRUE){
+        if(getcwd(wd, sizeof(wd)) != NULL)  //assigns working directory to wd char*
+            printf("\n[%s] $ ", wd);
+        char buf[4096];                     //holds user input
+        fgets(buf, sizeof(buf), stdin);     //assign user input to buf
+
+        buf[strcspn(buf, "\n")] = 0;        //removes newline character from input
+        fork_process(buf);                  //initiate fork for argu
+    }
 }

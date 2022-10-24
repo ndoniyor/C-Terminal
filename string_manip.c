@@ -3,20 +3,20 @@
 #include <stdio.h>
 #include "string_manip.h"
 
-void print_args(int size, char** args){
-    printf("Printing...\n");
+void print_args(int size, char** args){                                 //prints array of strings for debugging purposes
     int i;
     for(i=0;i<size;i++){
         printf("args[%d]=%s\n",i,args[i]);
     }
 }
-/*This function needs to be modified to allow for inputs with spaces like 'echo hello world' printing 'hello world'*/
-char** split(int* number_of_elements, char* string){                                             //C function to split string by 'space' delimiter
+char** split(int* number_of_elements, char* string){                    //Function to split string by 'space' delimiter into array of strings
+                                                                        //ex: "echo hello" -> {"echo", "hello"}
     int size_of_token, i = 1;
     int size_of_initial_array = strlen(string);                         //size of array before split
     char pre_split[size_of_initial_array]; 
 
-    while(string[i++]!=NULL){
+    while(string[i++]!=NULL){                                           //count number of spaces. This corresponds to how many tokens since
+                                                                        //tokens = number of spaces + 1
         if(string[i]==' ')
             *number_of_elements+=1;
     }
@@ -32,38 +32,29 @@ char** split(int* number_of_elements, char* string){                            
         strcpy(post_split[i++],token);                                  //copy token to post_split
         token = strtok(NULL," ");                                       //get next token
     }
-    post_split[i] = NULL;
-    return post_split;
+    post_split[i] = NULL;                                               //end string with NULL
+    return post_split;                                                  
 }
 
-char* append_working_directory(char* file){
-    char* directory = malloc(strlen(file)+2);
-    strcpy(directory, "./");
-    printf("Filename: %s, first char: %c\n",file,file[0]);
-    if(file[0]!='.'){
-        printf("Concatenating directory...\n");
-        strcat(directory,file);
-    }
-    else{
-        printf("comparison failed\n");
-    }
-    printf("dir: %s\n",directory);
-    
-    return directory;
-}
-
-int check_for_redirect(int size, char** args){
+int check_for_operator(int size, char** args){                          //checks for <, >, |, &, or cd in args
     int i;
+    if(strcmp(args[0],"cd") == 0)                                       //initially use strcmp to check for "cd"
+        return 5;
     for(i = 0; i<size;i++){
-        if(strchr(args[i],'>'))
+        if(strchr(args[i],'>'))                                         //then use strchr to see if operator is present in string
             return 1;
+        if(strchr(args[i],'<'))
+            return 2;
+        if(strchr(args[i],'|'))
+            return 3;
+        if(strchr(args[i],'&'))
+            return 4;
     }
     return 0;
 }
 
-void strip_operators(int* size, char** args){
-    int i;
-    *size-=2;
-    args = realloc(args,(*size) * sizeof(char *));
+void strip_operators(int* size, char** args, int char_to_strip){        //once operator has been recognized and is being handled, the operator
+    *size-=char_to_strip;                                               //and its args are no longer needed so this strips them so the base arg
+    args = realloc(args,(*size) * sizeof(char *));                      //can be passed into execvp
     args[*size]=NULL;
 }
